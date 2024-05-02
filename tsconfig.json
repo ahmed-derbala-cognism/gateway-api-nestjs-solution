@@ -1,0 +1,74 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@config/*": [
+        "src/configs/*"
+      ],
+      "@core/*": [
+        "src/core/*"
+      ],
+      "@mytypes/*": [
+        "src/core/my-types/*"
+      ],
+      "@mylogger/*": [
+        "src/core/my-logger/*"
+      ],
+      "@auth/*": [
+        "src/core/auth/*"
+      ],
+      "@roles/*": [
+        "src/core/auth/roles/*"
+      ],
+      "@jwt/*": [
+        "src/core/auth/jwt/*"
+      ],
+      "@notifications/*": [
+        "src/core/notifications/*"
+      ],
+      "@schemas/*": [
+        "src/core/schemas/*"
+      ],
+      "@pagination/*": [
+        "src/core/pagination/*"
+      ],
+      "@users/*": [
+        "src/api/users/*"
+      ],
+      "@files/*": [
+        "src/core/files/*"
+      ],
+      "@search/*": [
+        "src/core/search/*"
+      ],
+      "@shops/*": [
+        "src/api/shops/*"
+      ],
+      "@products/*": [
+        "src/api/products/*"
+      ],
+      "@posts/*": [
+        "src/api/posts/*"
+      ],
+      "@error/*": [
+        "src/core/error/*"
+      ],
+    }
+  }
+}
