@@ -15,6 +15,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Role } from '@roles/role.enum';
 import { UserEntity, usersSchemaName } from '@users/users.schema';
+import { AuthTranslationsService } from '@core/translations/auth.translations.service';
 
 @Injectable()
 export class AuthService {
@@ -51,7 +52,7 @@ export class AuthService {
   async signin(signinDto: signinDto) {
     const user = await this.UsersModel.findOne({ email: signinDto.email })
       .lean()
-      .select('+password email roles');
+      .select('+password email roles permissions');
 
     if (!user)
       throw new HttpException(

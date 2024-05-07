@@ -8,6 +8,7 @@ import {
   UserSettingsEntity,
   UserSettingsSchema,
 } from '@core/user-settings/user-settings.schema';
+import { PermissionsEnum } from '@core/auth/permissions/permissions.enum';
 
 export const usersSchemaName = 'users';
 export const UsersSchema = new mongoose.Schema(
@@ -21,6 +22,12 @@ export const UsersSchema = new mongoose.Schema(
       required: true,
       enum: Object.values(Role),
     },
+    permissions: {
+      type: [String],
+      required: true,
+      enum: Object.values(PermissionsEnum),
+      default: [PermissionsEnum.ViewPerson],
+    },
     settings: { type: UserSettingsSchema, select: false },
   },
   { timestamps: true },
@@ -32,5 +39,6 @@ export class UserEntity {
   profile: UserProfile;
   password: string;
   roles: string[];
+  permissions: string[];
   settings: UserSettingsEntity;
 }

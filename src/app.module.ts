@@ -13,19 +13,18 @@ import config from './config/config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-
-
-
-
 @Module({
-  imports: [ApiModule,
-    ThrottlerModule.forRoot([{
-      ttl: 60000,
-      limit: 10,
-    }]),
+  imports: [
+    ApiModule,
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
     CacheModule.register({
-      isGlobal:true,
-      ttl:30000,
+      isGlobal: true,
+      ttl: 30000,
     }),
     AuthModule,
     UsersModule,
@@ -38,13 +37,14 @@ import { MongooseModule } from '@nestjs/mongoose';
         ...config().db.mongo.options,
       }),
     }),
-
   ],
   controllers: [AppController],
-  providers: [AppService, {
-    provide: APP_GUARD,
-    useClass: ThrottlerGuard
-  }
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
-export class AppModule { }
+export class AppModule {}

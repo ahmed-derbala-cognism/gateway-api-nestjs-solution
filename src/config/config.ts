@@ -1,11 +1,10 @@
-const name = 'drinaluza';
+const name = 'growth-gateway-api';
 
 export default () => ({
   app: {
     name,
     version: '1.0.0',
-    description:
-      'Backend of Drinaluza. A mobile-first app to manage small business.',
+    description: 'gateway-api',
   },
   port: parseInt(process.env.PORT, 10) || 5000,
   db: {

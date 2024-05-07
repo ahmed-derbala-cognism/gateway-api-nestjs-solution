@@ -23,3 +23,9 @@ https://docs.nestjs.com/techniques/caching
 https://docs.nestjs.com/techniques/performance
 https://docs.nestjs.com/techniques/compression
 
+## authentication 
+https://docs.nestjs.com/security/authentication
+
+## authorization
+https://docs.nestjs.com/security/authorization
+
