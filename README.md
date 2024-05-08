@@ -1,5 +1,6 @@
 - evaluating nestjs as solution for gateway api
 - Option 4 – Cluster gateway with sidecar 
+- swagger documentation: http://127.0.0.1:5000/docs
 
 ### implemented features:
 

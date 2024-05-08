@@ -13,8 +13,6 @@ export default () => ({
       options: {
         maxPoolSize: 200,
         minPoolSize: 5,
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
       },
     },
   },
