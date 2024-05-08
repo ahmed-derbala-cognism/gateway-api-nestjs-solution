@@ -47,6 +47,7 @@ export class CommandProcessor {
             statusCode: clientTargetRequest.status,
           },
           status: 'completed',
+          completedAt: Date.now(),
         },
       );
     } catch (error) {

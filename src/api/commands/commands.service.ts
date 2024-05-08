@@ -41,6 +41,8 @@ export class CommandsService {
   async findOne({ _id }) {
     try {
       const fetchedCommand = await this.CommandsModel.findOne({ _id });
+      if (fetchedCommand)
+        this.CommandsModel.updateOne({ _id }, { checkedAt: Date.now() });
 
       return fetchedCommand;
     } catch (error) {

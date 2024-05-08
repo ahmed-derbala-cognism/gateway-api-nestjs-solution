@@ -1,14 +1,4 @@
 import mongoose from 'mongoose';
-import { Role } from '@roles/role.enum';
-import {
-  UserProfile,
-  UserProfileSchema,
-} from '@core/schemas/user-profile.schema';
-import {
-  UserSettingsEntity,
-  UserSettingsSchema,
-} from '@core/user-settings/user-settings.schema';
-import { PermissionsEnum } from '@core/auth/permissions/permissions.enum';
 
 export enum commandStatus {
   PENDING = 'pending',
@@ -68,5 +58,5 @@ export const CommandsSchema = new mongoose.Schema(
 );
 
 export class CommandEntity {
-  result: Object;
+  responce: Object;
 }
