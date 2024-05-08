@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Headers,
 } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { CreatePersonDto } from './dto/create-person.dto';
@@ -29,8 +30,8 @@ export class PersonController {
   @UseGuards(PermissionsGuard)
   @Permissions(PermissionsEnum.ViewPerson)
   @UseGuards(AuthGuard('jwt'))
-  search(@Body() createPersonDto: CreatePersonDto) {
-    return this.personService.searchPersons(createPersonDto);
+  search(@Headers() headers: Record<string, string>, @Body() body: any) {
+    return this.personService.searchPersons({ headers, body });
   }
 
   @Get()

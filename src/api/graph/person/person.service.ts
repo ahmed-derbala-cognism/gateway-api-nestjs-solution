@@ -15,13 +15,13 @@ export class PersonService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  async searchPersons(createPersonDto: CreatePersonDto) {
+  async searchPersons({ headers, body }) {
     const cacheData = await this.cacheManager.get('ceo');
     if (cacheData) return cacheData;
 
     const url =
       'https://app-staging.cognism.com/api/graph/person/search?indexFrom=0&indexSize=25';
-    const headers = {
+    headers = {
       accept: 'application/json, text/plain, */*',
       'accept-language': 'en-US,en;q=0.9,ar;q=0.8',
       'content-type': 'application/json',

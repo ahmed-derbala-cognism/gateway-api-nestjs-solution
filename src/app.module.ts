@@ -12,6 +12,7 @@ import { UsersModule } from '@users/users.module';
 import config from './config/config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -36,6 +37,13 @@ import { MongooseModule } from '@nestjs/mongoose';
         uri: configService.get('db.mongo.uri'),
         ...config().db.mongo.options,
       }),
+    }),
+
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
     }),
   ],
   controllers: [AppController],
