@@ -15,23 +15,20 @@ import { Job } from 'bull';
 import { HttpService } from '@nestjs/axios';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {
-  CommandEntity,
-  commandStatus,
-  commandsSchemaName,
-} from './commands.schema';
+import { commandStatus, Command } from './commands.schema';
 import { Scope } from '@nestjs/common';
 
-@Processor({ name: 'commands', scope: Scope.DEFAULT })
+//@Processor({ name: 'commands', scope: Scope.DEFAULT })
+@Processor({ name: 'commands' })
 export class CommandProcessor {
   constructor(
-    @InjectModel(commandsSchemaName)
-    private CommandsModel: Model<CommandEntity>,
+    @InjectModel(Command.name)
+    private CommandsModel: Model<Command>,
     private readonly httpService: HttpService,
   ) {}
 
   @Process('callRequest')
-  async callRequest(job) {
+  async callRequest(job: Job) {
     try {
       const { method, url, headers, body } = job.data.data;
 
@@ -46,7 +43,7 @@ export class CommandProcessor {
             data: clientTargetRequest.data,
             statusCode: clientTargetRequest.status,
           },
-          status: 'completed',
+          status: commandStatus.COMPLETED,
           completedAt: Date.now(),
         },
       );

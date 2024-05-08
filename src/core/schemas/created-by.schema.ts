@@ -1,13 +1,13 @@
-import { usersSchemaName } from '@users/users.schema';
+import { User } from '@users/users.schema';
 import mongoose from 'mongoose';
 
 export const CreatedBySchema = new mongoose.Schema(
   {
     kind: {
       type: String,
-      enum: [usersSchemaName],
+      enum: [User.name],
       required: true,
-      default: usersSchemaName,
+      default: User.name,
     },
     kindId: {
       type: mongoose.Schema.Types.ObjectId,

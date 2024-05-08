@@ -1,44 +1,37 @@
-import mongoose from 'mongoose';
-import { Role } from '@roles/role.enum';
-import {
-  UserProfile,
-  UserProfileSchema,
-} from '@core/schemas/user-profile.schema';
-import {
-  UserSettingsEntity,
-  UserSettingsSchema,
-} from '@core/user-settings/user-settings.schema';
 import { PermissionsEnum } from '@core/auth/permissions/permissions.enum';
+import { Role } from '@core/auth/roles/role.enum';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IsNotEmpty, IsString, IsEmail } from 'class-validator';
+import { HydratedDocument } from 'mongoose';
 
-export const usersSchemaName = 'users';
-export const UsersSchema = new mongoose.Schema(
-  {
-    username: String,
-    email: { unique: true, type: String },
-    profile: { type: UserProfileSchema, select: false },
-    password: { type: String, select: false },
-    roles: {
-      type: [String],
-      required: true,
-      enum: Object.values(Role),
-    },
-    permissions: {
-      type: [String],
-      required: true,
-      enum: Object.values(PermissionsEnum),
-      default: [PermissionsEnum.ViewPerson],
-    },
-    settings: { type: UserSettingsSchema, select: false },
-  },
-  { timestamps: true },
-);
+@Schema()
+export class User {
+  /* @IsNotEmpty()
+   @IsString()
+   @Prop({ required: true })
+   username: string;*/
 
-export class UserEntity {
-  username: string;
+  @IsNotEmpty()
+  @IsEmail()
+  @Prop({ required: true, unique: true })
   email: string;
-  profile: UserProfile;
+
+  @IsNotEmpty()
+  @IsString()
+  @Prop({ required: true })
   password: string;
-  roles: string[];
-  permissions: string[];
-  settings: UserSettingsEntity;
+
+  @Prop({ required: true, type: [String], enum: Object.values(Role) })
+  roles: [String];
+
+  @Prop({
+    required: true,
+    type: [String],
+    enum: Object.values(PermissionsEnum),
+    default: [PermissionsEnum.ViewPerson],
+  })
+  permissions: [String];
 }
+export type UserDocument = HydratedDocument<User>;
+
+export const UserSchema = SchemaFactory.createForClass(User);

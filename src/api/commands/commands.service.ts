@@ -1,12 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCommandDto } from './dto/create-command.dto';
 import { UpdateCommandDto } from './dto/update-command.dto';
-import { HttpService } from '@nestjs/axios';
-import {
-  CommandEntity,
-  commandStatus,
-  commandsSchemaName,
-} from './commands.schema';
+import { Command } from './commands.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { InjectQueue } from '@nestjs/bull';
@@ -15,23 +9,19 @@ import { Queue } from 'bull';
 @Injectable()
 export class CommandsService {
   constructor(
-    @InjectModel(commandsSchemaName)
-    private CommandsModel: Model<CommandEntity>,
-    private readonly httpService: HttpService,
+    @InjectModel(Command.name)
+    private CommandsModel: Model<Command>,
     @InjectQueue('commands') private commandQueue: Queue,
   ) {}
 
   async create({ request }) {
     try {
-      //console.log({ method, url, headers, body })
-      //  console.log(request)
       const createdCommand = await this.CommandsModel.create({ request });
 
       const job = await this.commandQueue.add('callRequest', {
         data: request,
         createdCommand,
       });
-      //console.log(job)
       return createdCommand;
     } catch (error) {
       throw new Error('Error: ' + error.message);
@@ -40,9 +30,15 @@ export class CommandsService {
 
   async findOne({ _id }) {
     try {
-      const fetchedCommand = await this.CommandsModel.findOne({ _id });
-      if (fetchedCommand)
-        this.CommandsModel.updateOne({ _id }, { checkedAt: Date.now() });
+      const checkedAt = new Date(Date.now());
+      let fetchedCommand = await this.CommandsModel.findOne({ _id }).lean();
+      if (fetchedCommand) {
+        const updatedCommand = await this.CommandsModel.updateOne(
+          { _id },
+          { checkedAt },
+        );
+        fetchedCommand.checkedAt = checkedAt;
+      }
 
       return fetchedCommand;
     } catch (error) {

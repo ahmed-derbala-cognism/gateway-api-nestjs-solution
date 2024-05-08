@@ -4,12 +4,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UserEntity, usersSchemaName } from './users.schema';
+import { User } from './users.schema';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(usersSchemaName)
-    private UsersModel: Model<UserEntity>,
+    @InjectModel(User.name)
+    private UsersModel: Model<User>,
     private configService: ConfigService,
   ) {}
 

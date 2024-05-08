@@ -14,14 +14,14 @@ import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Role } from '@roles/role.enum';
-import { UserEntity, usersSchemaName } from '@users/users.schema';
+import { User } from '@users/users.schema';
 import { AuthTranslationsService } from '@core/translations/auth.translations.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(usersSchemaName)
-    private UsersModel: Model<UserEntity>,
+    @InjectModel(User.name)
+    private UsersModel: Model<User>,
     private configService: ConfigService,
     private jwtService: JwtService,
   ) {}
@@ -52,7 +52,7 @@ export class AuthService {
   async signin(signinDto: signinDto) {
     const user = await this.UsersModel.findOne({ email: signinDto.email })
       .lean()
-      .select('+password email roles permissions');
+      .select('password email roles permissions');
 
     if (!user)
       throw new HttpException(
@@ -61,6 +61,8 @@ export class AuthService {
       );
 
     //user found, check password
+    console.log(user);
+
     const passwordCompare = bcrypt.compareSync(
       signinDto.password,
       user.password,
