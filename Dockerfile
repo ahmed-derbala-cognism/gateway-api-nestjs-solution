@@ -1,5 +1,5 @@
 # Use Node.js image as base
-FROM node:20-alpine
+FROM node:22
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -8,15 +8,15 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm run clean 
-
-RUN npm install 
+RUN npm run clean:prod
 
 # Copy the rest of the application code
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 3000
+RUN npm run build
 
-# Command to start the app using PM2 with maximum instances
-CMD ["pm2", "start", "npm", "--", "start", "-i", "max"]
+# Expose the port the app runs on
+EXPOSE 5000
+
+CMD ["npm","run" ,"start:prod"]
+

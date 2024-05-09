@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { AuthTranslationsService } from './auth.translations.service';
+import { Module } from '@nestjs/common'
+import { AuthTranslationsService } from './auth.translations.service'
 
 @Module({
-  controllers: [],
-  providers: [AuthTranslationsService],
-  exports: [AuthTranslationsService],
+	controllers: [],
+	providers: [AuthTranslationsService],
+	exports: [AuthTranslationsService]
 })
 export class TranslationsModule {}

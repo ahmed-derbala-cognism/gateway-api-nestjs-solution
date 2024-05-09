@@ -5,6 +5,13 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahmed-derbala-cognism/gateway-api-nestjs-solution"
+  },
+  "engines": {
+    "node": "22"
+  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -20,12 +27,13 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "push": "npm run format && git add . && git commit -m",
-    "postpush": "git push && npm run start:dev",
-    "clean": "rm -r -f dist && rm -f package-lock.json && rm -r -f node_modules",
-    "start:prod-pm2": "NODE_ENV=production pm2 start --name gateway-api dist/main.js -i max --node-args='--max-old-space-size=32000' -f && pm2 monit",
-    "stop": "pm2 stop all",
-    "delete": "pm2 delete all",
-    "monit": "pm2 monit"
+    "postpush": "git push && npm run start:devc",
+    "clean": "rm -r -f dist && rm -f package-lock.json && rm -r -f node_modules && npm i && npm run start:dev",
+    "clean:prod": "rm -r -f dist && rm -r -f node_modules && npm ci",
+    "pm2:start": "pm2 start src/config/pm2.config.js && pm2 monit",
+    "pm2:stop": "pm2 stop all",
+    "pm2:delete": "pm2 delete all",
+    "pm2:monit": "pm2 monit"
   },
   "dependencies": {
     "@fastify/compress": "^7.0.3",
