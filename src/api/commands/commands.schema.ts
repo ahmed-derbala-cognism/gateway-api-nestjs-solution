@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose'
+import { Job } from 'bull'
 import { IsNotEmpty, IsString, IsDate, IsOptional } from 'class-validator'
 import { HydratedDocument } from 'mongoose'
 
@@ -63,6 +64,17 @@ export class Command {
 		})
 	)
 	responce: Record<string, any>
+
+	@IsOptional()
+	@Prop(
+		raw({
+			id: {
+				type: Number,
+				required: false
+			}
+		})
+	)
+	job: Record<string, any>
 }
 export type CommandDocument = HydratedDocument<Command>
 

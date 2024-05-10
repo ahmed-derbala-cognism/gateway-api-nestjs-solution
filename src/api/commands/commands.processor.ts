@@ -16,6 +16,7 @@ import { HttpService } from '@nestjs/axios'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { commandStatus, Command } from './commands.schema'
+import { AxiosError } from 'axios'
 
 //@Processor({ name: 'commands', scope: Scope.DEFAULT })
 @Processor({ name: 'commands' })
@@ -30,10 +31,24 @@ export class CommandProcessor {
 	async callRequest(job: Job) {
 		try {
 			const { method, url, headers, body } = job.data.data
-
-			const clientTargetRequest = await this.httpService[method](url, body, {
-				headers
-			}).toPromise()
+			const clientTargetRequest = await this.httpService[method](url, body, { headers })
+				.toPromise()
+				.catch(async (err: AxiosError) => {
+					const updatedCommand = await this.CommandsModel.updateOne(
+						{ _id: job.data.createdCommand._id },
+						{
+							responce: {
+								data: err.toJSON(),
+								statusCode: 500
+							},
+							status: commandStatus.COMPLETED,
+							completedAt: Date.now(),
+							job: {
+								id: job.id
+							}
+						}
+					)
+				})
 
 			const updatedCommand = await this.CommandsModel.updateOne(
 				{ _id: job.data.createdCommand._id },
@@ -43,11 +58,14 @@ export class CommandProcessor {
 						statusCode: clientTargetRequest.status
 					},
 					status: commandStatus.COMPLETED,
-					completedAt: Date.now()
+					completedAt: Date.now(),
+					job: {
+						id: job.id
+					}
 				}
 			)
 		} catch (error) {
-			throw new Error('callRequest Error: ' + error.message)
+			throw new Error('callRequest Error: ' + error)
 		}
 	}
 
