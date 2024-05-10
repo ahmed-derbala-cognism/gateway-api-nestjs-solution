@@ -18,7 +18,6 @@ import { Model } from 'mongoose'
 import { commandStatus, Command } from './commands.schema'
 import { AxiosError } from 'axios'
 
-//@Processor({ name: 'commands', scope: Scope.DEFAULT })
 @Processor({ name: 'commands' })
 export class CommandProcessor {
 	constructor(
