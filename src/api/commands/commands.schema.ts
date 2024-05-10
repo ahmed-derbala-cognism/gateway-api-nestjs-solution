@@ -1,7 +1,5 @@
-import { PermissionsEnum } from '@core/auth/permissions/permissions.enum'
-import { Role } from '@core/auth/roles/role.enum'
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose'
-import { IsNotEmpty, IsString, IsEmail, IsDate, IsOptional } from 'class-validator'
+import { IsNotEmpty, IsString, IsDate, IsOptional } from 'class-validator'
 import { HydratedDocument } from 'mongoose'
 
 export enum commandStatus {

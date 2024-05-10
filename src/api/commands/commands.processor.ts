@@ -16,7 +16,6 @@ import { HttpService } from '@nestjs/axios'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { commandStatus, Command } from './commands.schema'
-import { Scope } from '@nestjs/common'
 
 //@Processor({ name: 'commands', scope: Scope.DEFAULT })
 @Processor({ name: 'commands' })

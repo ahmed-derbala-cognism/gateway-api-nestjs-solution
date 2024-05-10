@@ -7,7 +7,6 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { JwtStrategy } from '@jwt/jwt.strategy'
-import { TranslationsModule } from '@core/translations/translations.module'
 
 @Module({
 	controllers: [AuthController],
@@ -15,7 +14,6 @@ import { TranslationsModule } from '@core/translations/translations.module'
 	imports: [
 		UsersModule,
 		MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-		ConfigModule,
 		JwtModule.registerAsync({
 			imports: [ConfigModule],
 			inject: [ConfigService],
@@ -25,8 +23,7 @@ import { TranslationsModule } from '@core/translations/translations.module'
 					expiresIn: configService.get('auth.jwt.signOptions.expiresIn')
 				}
 			})
-		}),
-		TranslationsModule
+		})
 	]
 })
 export class AuthModule {}

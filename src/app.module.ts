@@ -4,15 +4,14 @@ import { AppService } from './app.service'
 import { ApiModule } from './api/api.module'
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { APP_GUARD } from '@nestjs/core'
-import type { RedisClientOptions } from 'redis'
-import * as redisStore from 'cache-manager-redis-store'
 import { CacheModule } from '@nestjs/cache-manager'
 import { AuthModule } from './core/auth/auth.module'
 import { UsersModule } from '@users/users.module'
-import config from './config/config'
+import config, { Iconfig } from '@config/config'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { BullModule } from '@nestjs/bull'
+import { LoggerModule } from 'nestjs-pino'
 
 @Module({
 	imports: [
@@ -34,17 +33,17 @@ import { BullModule } from '@nestjs/bull'
 			imports: [ConfigModule],
 			inject: [ConfigService],
 			useFactory: async (configService: ConfigService) => ({
-				uri: configService.get('db.mongo.uri'),
+				uri: configService.get<string>('db.mongo.uri'),
 				...config().db.mongo.options
 			})
 		}),
-
 		BullModule.forRoot({
 			redis: {
 				host: 'localhost',
 				port: 6379
 			}
-		})
+		}),
+		LoggerModule.forRoot()
 	],
 	controllers: [AppController],
 	providers: [

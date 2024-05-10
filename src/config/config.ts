@@ -1,5 +1,11 @@
 const name = 'growth-gateway-api'
-
+export type Iconfig = {
+	db: {
+		mongo: {
+			uri: string
+		}
+	}
+}
 export default () => ({
 	app: {
 		name,

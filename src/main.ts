@@ -8,9 +8,11 @@ import { VersioningType } from '@nestjs/common'
 import fastifyCsrf from '@fastify/csrf-protection'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ConfigService } from '@nestjs/config'
+import { Logger } from 'nestjs-pino'
 
 async function bootstrap() {
-	const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter({ logger: true }))
+	const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter())
+	app.useLogger(app.get(Logger))
 	const configService = app.get(ConfigService)
 
 	await app.register(helmet)

@@ -27,7 +27,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "push": "npm run format && git add . && git commit -m",
-    "postpush": "git push && npm run start:devc",
+    "postpush": "git push && npm run start:dev",
     "clean": "rm -r -f dist && rm -f package-lock.json && rm -r -f node_modules && npm i && npm run start:dev",
     "clean:prod": "rm -r -f dist && rm -r -f node_modules && npm ci",
     "pm2:start": "pm2 start src/config/pm2.config.js && pm2 monit",
@@ -60,7 +60,9 @@
     "cache-manager": "^5.5.2",
     "cache-manager-redis-store": "^3.0.1",
     "class-validator": "^0.14.1",
+    "nestjs-pino": "^4.0.0",
     "passport-jwt": "^4.0.1",
+    "pino-http": "^9.0.0",
     "redis": "^4.6.13",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"

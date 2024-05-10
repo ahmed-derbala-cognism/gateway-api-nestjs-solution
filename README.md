@@ -30,3 +30,9 @@ https://docs.nestjs.com/security/authentication
 ## authorization
 https://docs.nestjs.com/security/authorization
 
+## commands api
+https://docs.nestjs.com/techniques/queues
+
+## observability
+https://github.com/iamolegga/nestjs-pino
+

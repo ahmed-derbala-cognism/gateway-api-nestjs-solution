@@ -19,13 +19,13 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@config/*": [
-        "src/configs/*"
+        "src/config/*"
       ],
       "@core/*": [
         "src/core/*"
       ],
-      "@mytypes/*": [
-        "src/core/my-types/*"
+      "@custom-types/*": [
+        "src/core/custom-types/*"
       ],
       "@mylogger/*": [
         "src/core/my-logger/*"
@@ -41,9 +41,6 @@
       ],
       "@notifications/*": [
         "src/core/notifications/*"
-      ],
-      "@schemas/*": [
-        "src/core/schemas/*"
       ],
       "@pagination/*": [
         "src/core/pagination/*"

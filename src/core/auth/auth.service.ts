@@ -9,8 +9,7 @@ import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { Role } from '@roles/role.enum'
 import { User } from '@users/users.schema'
-import { AuthTranslationsService } from '@core/translations/auth.translations.service'
-
+import config from '@config/config'
 @Injectable()
 export class AuthService {
 	constructor(

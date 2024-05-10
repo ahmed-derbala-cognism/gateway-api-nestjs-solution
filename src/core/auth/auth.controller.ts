@@ -1,20 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, VERSION_NEUTRAL, Version, UseGuards } from '@nestjs/common'
 import { AuthService } from './auth.service'
-import { CreateAuthDto } from './dto/create-auth.dto'
 import { signupDto } from './dto/signup.dto'
 import { signinDto } from './dto/signin.dto'
 import { UpdateAuthDto } from './dto/update-auth.dto'
-import { AuthGuard } from '@nestjs/passport'
 import { JwtAuthGuard } from '@jwt/jwt-auth.guard'
-import { HttpRestType } from '@mytypes/http-rest.type'
-import { AuthTranslationsService } from '@core/translations/auth.translations.service'
+import { HttpRestType } from '@custom-types/http-rest.type'
 
 @Controller('auth')
 export class AuthController {
-	constructor(
-		private readonly authService: AuthService,
-		private authTranslationsService: AuthTranslationsService
-	) {}
+	constructor(private readonly authService: AuthService) {}
 	@Post('/signup')
 	async signup(@Body() signupDto: signupDto): Promise<HttpRestType> {
 		const createdUser = await this.authService.signup(signupDto)
@@ -34,7 +28,7 @@ export class AuthController {
 			pagination: null,
 			data: signedInUser,
 			error: false,
-			message: this.authTranslationsService.signIn({ lang: 'fr' })
+			message: { text: 'success', code: 'success' }
 		}
 
 		return result
