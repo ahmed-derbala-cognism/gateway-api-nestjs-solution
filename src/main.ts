@@ -4,7 +4,7 @@ import { AppModule } from './app.module'
 import compression from '@fastify/compress'
 import { constants } from 'zlib'
 import helmet from '@fastify/helmet'
-import { VersioningType } from '@nestjs/common'
+import { ValidationPipe, VersioningType } from '@nestjs/common'
 import fastifyCsrf from '@fastify/csrf-protection'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ConfigService } from '@nestjs/config'
@@ -27,6 +27,12 @@ async function bootstrap() {
 		type: VersioningType.HEADER,
 		header: 'api-version'
 	})
+
+	app.useGlobalPipes(
+		new ValidationPipe({
+			whitelist: true
+		})
+	)
 
 	const documentBuilder = new DocumentBuilder()
 		.setTitle(configService.get('app.name'))
